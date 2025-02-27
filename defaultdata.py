@@ -12,10 +12,10 @@ try:
 except ImportError:
     yaml = None
 
-def validate_project_structure(project_path, target_inv=None):
+def check_project_structure(project_path, target_inv=None):
     """
-    Validate the project folder structure and file naming conventions.
-    If target_inv is provided, only validate that investigation.
+    Check the project folder structure and file naming conventions.
+    If target_inv is provided, only check that investigation.
     Returns a list of error messages.
     """
     errors = []
@@ -76,7 +76,7 @@ def validate_project_structure(project_path, target_inv=None):
         else:
             investigations = {target_inv: investigations[target_inv]}
 
-    # Validate each investigation.
+    # Check each investigation.
     for inv, files_dict in investigations.items():
         # Investigation name must be alphanumeric (and underscores).
         if not re.fullmatch(r"[A-Za-z0-9_]+", inv):
@@ -94,7 +94,7 @@ def validate_project_structure(project_path, target_inv=None):
         if len(files_dict['source']) > 1:
             errors.append(f"Investigation '{inv}' must have at most one source file; found {len(files_dict['source'])}.")
 
-    # Optionally, validate content of tidy and sidecar files.
+    # Optionally, check content of tidy and sidecar files.
     for inv, files_dict in investigations.items():
         if files_dict['tidy']:
             tidy_file = files_dict['tidy'][0]
@@ -119,7 +119,7 @@ def validate_project_structure(project_path, target_inv=None):
                 except Exception as e:
                     errors.append(f"Sidecar file '{sidecar_file}' is not valid YAML: {str(e)}")
             else:
-                errors.append("PyYAML is not installed. Cannot validate sidecar YAML files.")
+                errors.append("PyYAML is not installed. Cannot check sidecar YAML files.")
 
     return errors
 
@@ -262,11 +262,11 @@ def package_investigations(target_inv=None):
     except Exception as e:
         sys.exit(f"Error writing datapackage.json: {e}")
 
-def cmd_validate(args):
+def cmd_check(args):
     # The investigation (if given) is the first argument.
     target_inv = args.investigation
     project_folder = os.getcwd()
-    errors = validate_project_structure(project_folder, target_inv)
+    errors = check_project_structure(project_folder, target_inv)
     if errors:
         print("Validation errors found:")
         for err in errors:
@@ -287,11 +287,11 @@ def main():
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    # 'validate' subcommand: optional investigation name.
-    validate_parser = subparsers.add_parser("validate", help="Validate project folder structure.")
-    validate_parser.add_argument("investigation", nargs="?", default=None,
+    # 'check' subcommand: optional investigation name.
+    check_parser = subparsers.add_parser("check", help="Check project folder structure.")
+    check_parser.add_argument("investigation", nargs="?", default=None,
                                  help="Investigation name (if omitted, all investigations are checked)")
-    validate_parser.set_defaults(func=cmd_validate)
+    check_parser.set_defaults(func=cmd_check)
 
     # 'package' subcommand: optional investigation name.
     package_parser = subparsers.add_parser("package", help="Create datapackage.json from investigation sidecar YAML(s).")
