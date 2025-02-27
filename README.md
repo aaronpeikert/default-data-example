@@ -12,8 +12,8 @@ chmod +x defaultdata.py
 ./defaultdata.py package
 ```
 
-`check` will check the basic filestructure and allert you if anything is missing
-`package` will turn the sidecar `yaml`(s) into a Frictionless `datapackage.json`
+* `check` will check the basic filestructure and allert you if anything is missing
+* `package` will turn the sidecar `yaml`(s) into a Frictionless `datapackage.json`
 
 
 # Optional
