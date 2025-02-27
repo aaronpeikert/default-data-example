@@ -32,7 +32,7 @@
       },
       "dialect": {
         "header": true,
-        "headerRows": "1",
+        "headerRows": [1],
         "headerJoin": " ",
         "commentChar": "#",
         "delimiter": "\t",
