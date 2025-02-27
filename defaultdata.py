@@ -148,20 +148,20 @@ def load_yaml_fields(yml_file):
     return fields
 
 def compute_file_info(tsv_path):
-    """Compute file size in bytes and SHA256 hash for a given file."""
+    """Compute file size in bytes and md5 hash for a given file."""
     try:
         bytes_size = os.path.getsize(tsv_path)
     except Exception as e:
         sys.exit(f"Error obtaining file size for {tsv_path}: {e}")
 
-    sha256_hash = hashlib.sha256()
+    md5_hash = hashlib.md5()
     try:
         with open(tsv_path, "rb") as f:
             for chunk in iter(lambda: f.read(8192), b""):
-                sha256_hash.update(chunk)
+                md5_hash.update(chunk)
     except Exception as e:
-        sys.exit(f"Error computing SHA256 for {tsv_path}: {e}")
-    return bytes_size, sha256_hash.hexdigest()
+        sys.exit(f"Error computing md5 for {tsv_path}: {e}")
+    return bytes_size, md5_hash.hexdigest()
 
 def package_investigations(target_inv=None):
     """
@@ -172,7 +172,7 @@ def package_investigations(target_inv=None):
     For each investigation:
       - The resource name is inferred from the sidecar YAML filename.
       - The corresponding TSV file is expected at data/<name>.tsv.
-      - The file size and SHA256 hash are computed if the TSV file exists.
+      - The file size and md5 hash are computed if the TSV file exists.
       - The sidecar YAML file (input schema) is loaded and converted to a list of fields.
       - Additional metadata (profile, format, mediatype, encoding, dialect, licenses, and created date)
         is added as per the original bash script.
@@ -227,7 +227,7 @@ def package_investigations(target_inv=None):
             },
             "dialect": {
                 "header": True,
-                "headerRows": "1",
+                "headerRows": [1],
                 "headerJoin": " ",
                 "commentChar": "#",
                 "delimiter": "\t",
