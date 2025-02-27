@@ -1,0 +1,10 @@
+id:
+  title: "A string uniquely identifying every participant."
+  type: string
+day:
+  title: "Day of assessment of the participant, counted from the first day they appeared in the lab."
+  type: integer
+happiness:
+  title: "How happy are you today?"
+  type: number
+  description: "We came up with the ingenious idea of asking people how happy they are. See Me, my friends, et al. (2025, 2024, 2022)"
