@@ -1,0 +1,54 @@
+{
+  "name": "default-data-example",
+  "resources": [
+    {
+      "profile": "tabular-data-resource",
+      "name": "happiness",
+      "path": "data/happiness.tsv",
+      "format": "tsv",
+      "mediatype": "text/tab-separated-values",
+      "encoding": "utf-8",
+      "bytes": 71,
+      "hash": "7f8917a40c7176eab2f513006d4790c2dd69a6088b7c40b5c74a555eee2b4405",
+      "schema": {
+        "fields": [
+          {
+            "name": "id",
+            "title": "A string uniquely identifying every participant.",
+            "type": "string"
+          },
+          {
+            "name": "day",
+            "title": "Day of assessment of the participant, counted from the first day they appeared in the lab.",
+            "type": "integer"
+          },
+          {
+            "name": "happiness",
+            "title": "How happy are you today?",
+            "type": "number",
+            "description": "We came up with the ingenious idea of asking people how happy they are. See Me, my friends, et al. (2025, 2024, 2022)"
+          }
+        ]
+      },
+      "dialect": {
+        "header": true,
+        "headerRows": "1",
+        "headerJoin": " ",
+        "commentChar": "#",
+        "delimiter": "\t",
+        "lineTerminator": "\r\n",
+        "quoteChar": "\"",
+        "doubleQuote": true,
+        "skipInitialSpace": false
+      },
+      "licenses": [
+        {
+          "name": "CC0",
+          "title": "Creative Commons CC0",
+          "path": "https://creativecommons.org/publicdomain/zero/1.0/"
+        }
+      ],
+      "created": "2025-02-27T11:07:37Z"
+    }
+  ]
+}
